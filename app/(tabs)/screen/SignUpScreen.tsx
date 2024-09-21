@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Alert } from 'react-native';
 import { FIREBASE_AUTH } from '../firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { Ionicons } from '@expo/vector-icons'; // Sử dụng icon mắt
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // Điều khiển hiển thị mật khẩu
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // Hiển thị mật khẩu xác nhận
 
   const handleSignUp = async () => {
     if (password !== confirmPassword) {
@@ -35,24 +38,40 @@ const SignUpScreen = () => {
         autoCapitalize="none"
         placeholderTextColor="#888"
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Mật khẩu"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        autoCapitalize="none"
-        placeholderTextColor="#888"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Xác nhận mật khẩu"
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-        secureTextEntry
-        autoCapitalize="none"
-        placeholderTextColor="#888"
-      />
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={[styles.inputPassword, { marginBottom: 30 }]} // Thêm khoảng cách giữa mật khẩu và xác nhận mật khẩu
+          placeholder="Mật khẩu"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={!showPassword} // Hiển thị hoặc ẩn mật khẩu
+          autoCapitalize="none"
+          placeholderTextColor="#888"
+        />
+        <TouchableOpacity
+          style={styles.iconContainer}
+          onPress={() => setShowPassword(!showPassword)}
+        >
+          <Ionicons name={showPassword ? 'eye-off' : 'eye'} size={24} color="gray" />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.inputPassword}
+          placeholder="Xác nhận mật khẩu"
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          secureTextEntry={!showConfirmPassword} // Hiển thị hoặc ẩn mật khẩu xác nhận
+          autoCapitalize="none"
+          placeholderTextColor="#888"
+        />
+        <TouchableOpacity
+          style={styles.iconContainer}
+          onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+        >
+          <Ionicons name={showConfirmPassword ? 'eye-off' : 'eye'} size={24} color="gray" />
+        </TouchableOpacity>
+      </View>
       <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
         <Text style={styles.signUpButtonText}>Đăng Ký</Text>
       </TouchableOpacity>
@@ -65,35 +84,55 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 20,
-    backgroundColor: '#f7f8fa',
+    backgroundColor: '#e3f2fd', // Màu nền nhẹ nhàng hơn
   },
   title: {
-    fontSize: 30,
+    fontSize: 32,
     fontWeight: 'bold',
-    color: '#4CAF50',
+    color: '#1565c0', // Màu chữ tiêu đề nổi bật
     textAlign: 'center',
     marginBottom: 30,
   },
   input: {
     height: 50,
-    backgroundColor: '#fff',
-    borderRadius: 10,
+    backgroundColor: '#ffffff',
+    borderRadius: 12,
     paddingHorizontal: 15,
     marginBottom: 20,
-    fontSize: 16,
+    fontSize: 18,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#90caf9', // Viền xanh dương nhẹ
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  inputPassword: {
+    flex: 1,
+    height: 50,
+    backgroundColor: '#ffffff',
+    borderRadius: 12,
+    paddingHorizontal: 15,
+    fontSize: 18,
+    borderWidth: 1,
+    borderColor: '#90caf9', // Viền xanh dương nhẹ
+  },
+  iconContainer: {
+    position: 'absolute',
+    right: 10,
   },
   signUpButton: {
-    backgroundColor: '#4CAF50',
-    borderRadius: 8,
+    backgroundColor: '#1565c0', // Màu xanh đậm cho nút
+    borderRadius: 12,
     paddingVertical: 15,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 20,
   },
   signUpButtonText: {
-    color: '#fff',
-    fontSize: 18,
+    color: '#ffffff',
+    fontSize: 20,
     fontWeight: 'bold',
   },
 });
