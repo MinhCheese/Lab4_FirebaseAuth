@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet, Alert } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Alert } from 'react-native';
 import { FIREBASE_AUTH } from '../firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
@@ -25,7 +25,7 @@ const SignUpScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Đăng Ký Tài Khoản</Text>
+      <Text style={styles.title}>Tạo Tài Khoản</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -33,6 +33,7 @@ const SignUpScreen = () => {
         onChangeText={setEmail}
         keyboardType="email-address"
         autoCapitalize="none"
+        placeholderTextColor="#888"
       />
       <TextInput
         style={styles.input}
@@ -41,6 +42,7 @@ const SignUpScreen = () => {
         onChangeText={setPassword}
         secureTextEntry
         autoCapitalize="none"
+        placeholderTextColor="#888"
       />
       <TextInput
         style={styles.input}
@@ -49,8 +51,11 @@ const SignUpScreen = () => {
         onChangeText={setConfirmPassword}
         secureTextEntry
         autoCapitalize="none"
+        placeholderTextColor="#888"
       />
-      <Button title="Đăng Ký" onPress={handleSignUp} color="#4CAF50" />
+      <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
+        <Text style={styles.signUpButtonText}>Đăng Ký</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -59,27 +64,37 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    padding: 16,
-    backgroundColor: '#f5f5f5',
+    padding: 20,
+    backgroundColor: '#f7f8fa',
   },
   title: {
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: 'bold',
-    marginBottom: 24,
+    color: '#4CAF50',
     textAlign: 'center',
-    color: '#333',
+    marginBottom: 30,
   },
   input: {
     height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    marginBottom: 16,
-    paddingHorizontal: 10,
     backgroundColor: '#fff',
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    marginBottom: 20,
+    fontSize: 16,
+    borderWidth: 1,
+    borderColor: '#ddd',
   },
-  buttonContainer: {
-    marginTop: 20,
+  signUpButton: {
+    backgroundColor: '#4CAF50',
+    borderRadius: 8,
+    paddingVertical: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  signUpButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 

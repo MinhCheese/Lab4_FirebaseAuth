@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { FIREBASE_AUTH } from '../firebaseConfig';
 import { signOut } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
@@ -24,10 +24,12 @@ const WelcomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Chúc mừng!</Text>
+      <Text style={styles.title}>🎉 Chúc mừng! 🎉</Text>
       <Text style={styles.message}>Bạn đã đăng nhập thành công với tài khoản:</Text>
       <Text style={styles.email}>{user?.email}</Text>
-      <Button title="Đăng xuất" onPress={handleLogout} />
+      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <Text style={styles.logoutButtonText}>Đăng Xuất</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -37,21 +39,39 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 16,
+    padding: 20,
+    backgroundColor: '#f7f8fa',
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 16,
+    color: '#4CAF50',
+    marginBottom: 20,
+    textAlign: 'center',
   },
   message: {
     fontSize: 18,
-    marginBottom: 8,
+    color: '#333',
+    marginBottom: 10,
+    textAlign: 'center',
   },
   email: {
     fontSize: 16,
-    color: 'blue',
-    marginBottom: 24,
+    color: '#3f51b5',
+    marginBottom: 30,
+    textAlign: 'center',
+  },
+  logoutButton: {
+    backgroundColor: '#f44336',
+    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    alignItems: 'center',
+  },
+  logoutButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 

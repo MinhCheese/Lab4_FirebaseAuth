@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet, Alert } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Alert } from 'react-native';
 import { FIREBASE_AUTH } from '../firebaseConfig';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
@@ -29,7 +29,10 @@ const ForgotPasswordScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Quên Mật Khẩu</Text>
+      <Text style={styles.title}>Quên Mật Khẩu?</Text>
+      <Text style={styles.subtitle}>
+        Nhập email của bạn và chúng tôi sẽ gửi liên kết đặt lại mật khẩu.
+      </Text>
       <TextInput
         style={styles.input}
         placeholder="Nhập Email"
@@ -37,8 +40,11 @@ const ForgotPasswordScreen = () => {
         onChangeText={setEmail}
         keyboardType="email-address"
         autoCapitalize="none"
+        placeholderTextColor="#888"
       />
-      <Button title="Gửi Yêu Cầu" onPress={handleResetPassword} color="#4CAF50" />
+      <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
+        <Text style={styles.buttonText}>Gửi Yêu Cầu</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -47,24 +53,43 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    padding: 16,
-    backgroundColor: '#f5f5f5',
+    padding: 20,
+    backgroundColor: '#e0f7fa', // nền màu xanh nhạt
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 24,
     textAlign: 'center',
-    color: '#333',
+    color: '#00796b', // màu xanh đậm
+    marginBottom: 20,
+  },
+  subtitle: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: '#555',
+    marginBottom: 30,
   },
   input: {
     height: 50,
-    borderColor: '#ccc',
+    backgroundColor: '#ffffff',
+    borderRadius: 12,
+    paddingHorizontal: 15,
+    marginBottom: 20,
+    fontSize: 16,
+    borderColor: '#00796b', // viền màu xanh
     borderWidth: 1,
-    borderRadius: 8,
-    marginBottom: 16,
-    paddingHorizontal: 10,
-    backgroundColor: '#fff',
+  },
+  button: {
+    height: 50,
+    backgroundColor: '#00796b', // màu xanh đậm
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
