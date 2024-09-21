@@ -4,7 +4,7 @@ import { FIREBASE_AUTH } from '../firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../index'; // Đảm bảo đường dẫn chính xác đến file App.tsx
+import { RootStackParamList } from '../index'; 
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
 
@@ -47,6 +47,9 @@ const LoginScreen = () => {
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
         <Text style={styles.linkText}>Đăng Ký Tài Khoản</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
+        <Text style={styles.forgotPasswordText}>Quên Mật Khẩu?</Text>
       </TouchableOpacity>
     </View>
   );
@@ -93,6 +96,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#4CAF50',
     fontSize: 16,
+    marginBottom: 10,
+  },
+  forgotPasswordText: {
+    textAlign: 'center',
+    color: '#f44336',
+    fontSize: 16,
+    textDecorationLine: 'underline',
   },
 });
 
