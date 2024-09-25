@@ -8,12 +8,28 @@ const SignUpScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // Điều khiển hiển thị mật khẩu
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // Hiển thị mật khẩu xác nhận
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordError, setPasswordError] = useState(''); // Add this line
 
   const handleSignUp = async () => {
     if (password !== confirmPassword) {
       Alert.alert('Lỗi', 'Mật khẩu xác nhận không khớp.');
+      return;
+    }
+
+    if (password.length < 8) {
+      setPasswordError('Mật khẩu phải có ít nhất 8 ký tự.');
+      return;
+    }
+
+    if (!/[a-zA-Z]/.test(password)) {
+      setPasswordError('Mật khẩu phải có ít nhất một chữ cái.');
+      return;
+    }
+
+    if (!/\d/.test(password)) {
+      setPasswordError('Mật khẩu phải có ít nhất một số.');
       return;
     }
 
@@ -40,11 +56,11 @@ const SignUpScreen = () => {
       />
       <View style={styles.passwordContainer}>
         <TextInput
-          style={[styles.inputPassword, { marginBottom: 30 }]} // Thêm khoảng cách giữa mật khẩu và xác nhận mật khẩu
+          style={[styles.inputPassword, { marginBottom: 30 }]}
           placeholder="Mật khẩu"
           value={password}
           onChangeText={setPassword}
-          secureTextEntry={!showPassword} // Hiển thị hoặc ẩn mật khẩu
+          secureTextEntry={!showPassword}
           autoCapitalize="none"
           placeholderTextColor="#888"
         />
@@ -55,13 +71,18 @@ const SignUpScreen = () => {
           <Ionicons name={showPassword ? 'eye-off' : 'eye'} size={24} color="gray" />
         </TouchableOpacity>
       </View>
+      {passwordError && (
+        <Text style={{ color: 'red', fontSize: 16, marginBottom: 10 }}>
+          {passwordError}
+        </Text>
+      )}
       <View style={styles.passwordContainer}>
         <TextInput
           style={styles.inputPassword}
           placeholder="Xác nhận mật khẩu"
           value={confirmPassword}
           onChangeText={setConfirmPassword}
-          secureTextEntry={!showConfirmPassword} // Hiển thị hoặc ẩn mật khẩu xác nhận
+          secureTextEntry={!showConfirmPassword}
           autoCapitalize="none"
           placeholderTextColor="#888"
         />
